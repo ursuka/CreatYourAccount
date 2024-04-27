@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="progressBar">
+        <div class="progress">
+            <div class="percent"></div>
+        </div>
+        <div class="steps">
+            <div class="step" id="stage1"><span>1</span><span class="textSpan">ACCOUNT SETUP</span></div>
+            <div class="step" id="stage2"><span>2</span><span class="textSpan">SOCIAL PROFILES</span></div>
+            <div class="step" id="stage3"><span>3</span><span class="textSpan">PERSONAL DETAILS</span></div>
+        </div>
+    </div>
+    <form action="#">
+        <div class="step1 layers ">
+            <h2>CREATE YOUR ACCOUNT</h2>
+            <p>This is step 1</p>
+            <input type="email" placeholder="Email">
+            <input type="password" autocomplete="on" placeholder="Password">
+            <input type="password" autocomplete="on" placeholder="Confirm Password">
+            <div class="buttons">
+                <button id="next1">Next</button>
+            </div>
+        </div>
+
+        <div class="step2 layers hidde">
+            <h2>SOCIAL PROFILES</h2>
+            <p>Your presence on the social network</p>
+            <input type="text" placeholder="Twitter">
+            <input type="text" placeholder="Facebook">
+            <input type="text" placeholder="Google Plus">
+            <div class="buttons">
+                <button id="previous1">Previous</button>
+                <button id="next2">Next</button>
+            </div>
+        </div>
+
+        <div class="step3 layers hidde">
+            <h2>PERSONAL DETAILS</h2>
+            <p>We will never sell it</p>
+            <input type="text" placeholder="First Name">
+            <input type="text" placeholder="Last Name">
+            <input type="tel" placeholder="Phone">
+            <textarea placeholder="Adress"></textarea>
+            <div class="buttons">
+                <button id="previous2">Previous</button>
+                <button id="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="script/script.js"></script>
+</body>
+</html>
