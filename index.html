@@ -25,36 +25,47 @@
         <div class="step1 layers ">
             <h2>CREATE YOUR ACCOUNT</h2>
             <p>This is step 1</p>
-            <input type="email" placeholder="Email">
-            <input type="password" autocomplete="on" placeholder="Password">
-            <input type="password" autocomplete="on" placeholder="Confirm Password">
+            <input type="email" name="email" placeholder="Email" id="email">
+            <p class="validation" id="validationEmail"></p>
+            <input type="password" name="password" placeholder="Password"
+                   id="password">
+            <p class="validation"></p>
+            <input type="password" name="passwordConfirm" placeholder="Confirm Password"
+                   id="passwordConfirm">
+            <p class="validation" id="validationPassword"></p>
             <div class="buttons">
-                <button id="next1">Next</button>
+                <button type="button" id="next1" disabled>Next</button>
             </div>
         </div>
 
-        <div class="step2 layers hidde">
+        <div class="step2 layers hidden">
             <h2>SOCIAL PROFILES</h2>
             <p>Your presence on the social network</p>
-            <input type="text" placeholder="Twitter">
-            <input type="text" placeholder="Facebook">
-            <input type="text" placeholder="Google Plus">
+            <input type="text" name="link" placeholder="Twitter" class="network" id="link1">
+            <p class="validation"></p>
+            <input type="text" name="link" placeholder="Facebook" class="network" id="link2">
+            <p class="validation"></p>
+            <input type="text" name="link" placeholder="Google Plus" class="network" id="link3">
+            <p class="validation"></p>
             <div class="buttons">
-                <button id="previous1">Previous</button>
-                <button id="next2">Next</button>
+                <button type="button" id="previous1">Previous</button>
+                <button type="button" id="next2" disabled>Next</button>
             </div>
         </div>
 
-        <div class="step3 layers hidde">
+        <div class="step3 layers hidden">
             <h2>PERSONAL DETAILS</h2>
             <p>We will never sell it</p>
-            <input type="text" placeholder="First Name">
-            <input type="text" placeholder="Last Name">
-            <input type="tel" placeholder="Phone">
-            <textarea placeholder="Adress"></textarea>
+            <input type="text" name="firstName" placeholder="First Name" class="name" id="firstName">
+            <p class="validation"></p>
+            <input type="text" name="lastName" placeholder="Last Name" class="name" id="lastName">
+            <p class="validation"></p>
+            <input type="tel" name="phone" placeholder="Phone" id="phoneNum">
+            <p class="validation" id="validationPhoneNum"></p>
+            <textarea name="address" placeholder="Address" id="address"></textarea>
             <div class="buttons">
-                <button id="previous2">Previous</button>
-                <button id="submit">Submit</button>
+                <button type="button" id="previous2">Previous</button>
+                <button type="submit" id="submit" disabled>Submit</button>
             </div>
         </div>
     </form>
