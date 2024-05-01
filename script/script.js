@@ -140,23 +140,23 @@ const emailValidation = (email) => {
 const passwordValidation = (password) => {
     const passwordValue = password.value;
     const passwordConfirmValue = passwordConfirm.value;
-    if (!emptyInputCheck(passwordValue) && !emptyInputCheck(passwordConfirmValue)) {
-        if (passwordValue === passwordConfirmValue) {
-            if (passwordCheck(passwordValue) && passwordCheck(passwordConfirmValue)) {
-                passwordConfirmStatus.style.color = "#38ad60";
-                passwordConfirmStatus.innerHTML = "<em>Valid password!</em>";
-                return true;
-            }
-            passwordConfirmStatus.style.color = "red";
-            passwordConfirmStatus.innerHTML = "<em>Password must contain at least ( 8 charaters, 1 uppercase, 1 special charater ) </em>"
-        } else {
-            passwordConfirmStatus.style.color = "red";
-            passwordConfirmStatus.innerHTML = "<em>Invalid password!</em>"
-        }
-    } else {
+    if (emptyInputCheck(passwordValue) && emptyInputCheck(passwordConfirmValue)) {
         passwordConfirmStatus.innerHTML = " ";
+        return false;
     }
-    return false;
+    if (passwordValue !== passwordConfirmValue) {
+        passwordConfirmStatus.style.color = "red";
+        passwordConfirmStatus.innerHTML = "<em>Invalid password!</em>";
+        return false;
+    }
+    if (!(passwordCheck(passwordValue) && passwordCheck(passwordConfirmValue))) {
+        passwordConfirmStatus.style.color = "red";
+        passwordConfirmStatus.innerHTML = "<em>Password must contain at least ( 8 charaters, 1 uppercase, 1 special charater ) </em>";
+        return false;
+    }
+    passwordConfirmStatus.style.color = "#38ad60";
+    passwordConfirmStatus.innerHTML = "<em>Valid password!</em>";
+    return true;
 }
 
 
