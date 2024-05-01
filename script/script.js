@@ -2,6 +2,9 @@
 const find = (selector) => {
     return document.querySelector(selector);
 }
+const findAll = (selector) => {
+    return document.querySelectorAll(selector);
+}
 
 const body = find("body");
 
@@ -17,6 +20,20 @@ const layer3 = find('.step3');
 const progress = find('.progress');
 const stage2 = find('#stage2');
 const stage3 = find('#stage3');
+const email = find('#email');
+const password = find('#password');
+const passwordConfirm = find('#passwordConfirm');
+const address = find('.address');
+const emailStatus = find('#validationEmail');
+const passwordConfirmStatus = find('#validationPassword');
+const allInputsStep2 = findAll('.step2 > input');
+const link1 = find("#link1");
+const link2 = find("#link2");
+const link3 = find("#link3");
+const phoneInput = find('#phoneNum');
+const allInputsStep3 = findAll('.step3 > input, textarea');
+const submit = find("#submit");
+const telStatus = find("#phoneValidation");
 let percentGreen = 0;
 
 
@@ -33,7 +50,7 @@ const unCheckedStage = (stage) => {
     progress.style.background = `linear-gradient(90deg, #38ad60 ${percentGreen -= 50}%, white 0%)`;
 }
 
-// animation function
+// animation functions
 const animationIn = (layer) => {
     layer.style.animationName = 'slideIn';
     layer.style.animationDuration = "0.5s";
@@ -50,15 +67,15 @@ const exposeDiv = (layer) => {
     layer.style.animationName = 'opacityOut';
     layer.style.animationDuration = "0.5s";
 }
-const addHiddeClass = (layer1, layer2) => {
-    layer1.classList.toggle("hidde");
-    layer2.classList.toggle("hidde");
+const addHiddenClass = (layer1, layer2) => {
+    layer1.classList.toggle("hidden");
+    layer2.classList.toggle("hidden");
 }
 
 // animation orders
 const orders1 = (layer1, layer2) => {
     setTimeout(() => {
-        addHiddeClass(layer1, layer2);
+        addHiddenClass(layer1, layer2);
     }, 300)
     setTimeout(() => {
         animationIn(layer2);
@@ -70,7 +87,7 @@ const orders1 = (layer1, layer2) => {
 
 const orders2 = (layer1, layer2) => {
     setTimeout(() => {
-        addHiddeClass(layer1, layer2);
+        addHiddenClass(layer1, layer2);
     }, 300)
     setTimeout(() => {
         exposeDiv(layer1);
@@ -80,7 +97,134 @@ const orders2 = (layer1, layer2) => {
     }, 100)
 }
 
-// events
+// config validations
+const emailCheck = (input) => {
+    return String(input)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
+
+const emptyInputCheck = (input) => {
+    return String(input)
+        .toLowerCase()
+        .match(/^\s*$/);
+};
+
+// email validation function
+
+const emailValidation = (email) => {
+    const emailValue = email.value;
+    if (!emptyInputCheck(emailValue)) {
+        if (emailCheck(emailValue)) {
+            emailStatus.style.color = "#38ad60";
+            emailStatus.innerHTML = "<em>Valid email!</em>"
+            return true;
+        } else {
+            emailStatus.style.color = "red";
+            emailStatus.innerHTML = "<em>Invalid email!</em>"
+        }
+    } else {
+        emailStatus.innerHTML = " ";
+    }
+    return false;
+}
+
+// password Validation function
+const passwordValidation = (password) => {
+    const passwordValue = password.value;
+    const passwordConfirmValue = passwordConfirm.value;
+    if (!emptyInputCheck(passwordValue) && !emptyInputCheck(passwordConfirmValue)) {
+        if (passwordValue === passwordConfirmValue) {
+            passwordConfirmStatus.style.color = "#38ad60";
+            passwordConfirmStatus.innerHTML = "<em>Valid password!</em>";
+            return true;
+        } else {
+            passwordConfirmStatus.style.color = "red";
+            passwordConfirmStatus.innerHTML = "<em>Invalid password!</em>"
+        }
+    } else {
+        passwordConfirmStatus.innerHTML = " ";
+    }
+    return false;
+}
+
+
+// function to enable button on first layer
+const enableButtonV1 = (email, password, button) => {
+    if (emailValidation(email) && passwordValidation(password)) {
+        button.removeAttribute('disabled')
+    } else {
+        button.setAttribute('disabled', "true")
+    }
+}
+
+// function to enable button on second layer
+const enableButtonV2 = (inputs, button) => {
+    let count = 0;
+    inputs.forEach(item => {
+        if (!emptyInputCheck(item.value)) {
+            count++;
+        }
+    })
+    if (inputs.length === count) {
+        button.removeAttribute('disabled')
+    } else {
+        button.setAttribute('disabled', "true")
+    }
+}
+
+// applying validation function on first layer
+email.addEventListener('keyup', () => {
+    emailValidation(email);
+    enableButtonV1(email, password, next1);
+})
+
+password.addEventListener('keyup', () => {
+    passwordValidation(password);
+    enableButtonV1(email, password, next1);
+})
+
+passwordConfirm.addEventListener('keyup', () => {
+    passwordValidation(password);
+    enableButtonV1(email, password, next1);
+})
+
+// applying validation function on second layer
+
+link1.addEventListener("change", () => {
+    enableButtonV2(allInputsStep2, next2);
+})
+link2.addEventListener("change", () => {
+    enableButtonV2(allInputsStep2, next2);
+})
+link3.addEventListener("input", () => {
+    enableButtonV2(allInputsStep2, next2);
+})
+
+// applying validations on third layer
+
+// phone number validation && mask
+phoneInput.addEventListener('input', function (event) {
+    let result = event.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,2})(\d{0,2})(\d{0,2})/);
+    if (!result[2]) {
+        event.target.value = result[1];
+        submit.setAttribute('disabled', "true")
+    } else {
+        event.target.value = '+' + result[1] + ' (' + result[2] + ') ' + result[3];
+        if (result[4]) {
+            event.target.value += ' ' + result[4];
+            submit.setAttribute('disabled', "true")
+        }
+        if (result[5]) {
+            event.target.value += ' ' + result[5];
+            submit.removeAttribute('disabled')
+        }
+    }
+});
+
+// button events
 next1.addEventListener('click', () => {
     orders1(layer1, layer2);
     checkedStage(stage2);
