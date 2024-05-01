@@ -112,6 +112,11 @@ const emptyInputCheck = (input) => {
         .match(/^\s*$/);
 };
 
+const passwordCheck = (input) => {
+    return String(input)
+        .match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/);
+}
+
 // email validation function
 
 const emailValidation = (email) => {
@@ -137,9 +142,13 @@ const passwordValidation = (password) => {
     const passwordConfirmValue = passwordConfirm.value;
     if (!emptyInputCheck(passwordValue) && !emptyInputCheck(passwordConfirmValue)) {
         if (passwordValue === passwordConfirmValue) {
-            passwordConfirmStatus.style.color = "#38ad60";
-            passwordConfirmStatus.innerHTML = "<em>Valid password!</em>";
-            return true;
+            if (passwordCheck(passwordValue) && passwordCheck(passwordConfirmValue)) {
+                passwordConfirmStatus.style.color = "#38ad60";
+                passwordConfirmStatus.innerHTML = "<em>Valid password!</em>";
+                return true;
+            }
+            passwordConfirmStatus.style.color = "red";
+            passwordConfirmStatus.innerHTML = "<em>Password must contain at least ( 8 charaters, 1 uppercase, 1 special charater ) </em>"
         } else {
             passwordConfirmStatus.style.color = "red";
             passwordConfirmStatus.innerHTML = "<em>Invalid password!</em>"
@@ -204,7 +213,6 @@ link3.addEventListener("input", () => {
 })
 
 // applying validations on third layer
-
 // phone number validation && mask
 phoneInput.addEventListener('input', function (event) {
     let result = event.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,2})(\d{0,2})(\d{0,2})/);
